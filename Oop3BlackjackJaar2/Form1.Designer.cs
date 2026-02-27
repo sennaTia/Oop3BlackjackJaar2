@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             button1 = new Button();
+            radioButton1 = new RadioButton();
             SuspendLayout();
             // 
             // button1
@@ -40,20 +41,34 @@
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(0, 46);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(158, 34);
+            radioButton1.TabIndex = 1;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "radioButton1";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(radioButton1);
             Controls.Add(button1);
             Name = "Form1";
             Text = "Form1";
             Click += Form1_Click;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
+        private RadioButton radioButton1;
     }
 }
