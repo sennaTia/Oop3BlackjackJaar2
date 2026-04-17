@@ -91,6 +91,13 @@
             lblMove.Size = new Size(100, 39);
             lblMove.TabIndex = 6;
             lblMove.Text = "Speler wil: -";
+            button1.Location = new Point(1, 0);
+            button1.Name = "button1";
+            button1.Size = new Size(131, 40);
+            button1.TabIndex = 0;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+ 
             // 
             // Form1
             // 
