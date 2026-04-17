@@ -4,145 +4,107 @@
     {
         private System.ComponentModel.IContainer components = null;
 
+        private System.Windows.Forms.Button btnShuffle;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Button btnHit;
-        private System.Windows.Forms.Button btnStand;
-
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.Label lblCards;
         private System.Windows.Forms.Label lblPlayer;
-        private System.Windows.Forms.Label lblAdvice;
-        private System.Windows.Forms.Label lblResult;
-        private System.Windows.Forms.Label lblPoints;
+        private System.Windows.Forms.Label lblMove;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
+            btnShuffle = new Button();
             btnStart = new Button();
-            btnHit = new Button();
-            btnStand = new Button();
+            btnReset = new Button();
+            lblScore = new Label();
+            lblCards = new Label();
             lblPlayer = new Label();
-            lblAdvice = new Label();
-            lblResult = new Label();
-            lblPoints = new Label();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            lblMove = new Label();
             SuspendLayout();
+            // 
+            // btnShuffle
+            // 
+            btnShuffle.Location = new Point(50, 30);
+            btnShuffle.Name = "btnShuffle";
+            btnShuffle.Size = new Size(150, 40);
+            btnShuffle.TabIndex = 0;
+            btnShuffle.Text = "Shuffle";
+            btnShuffle.Click += btnShuffle_Click;
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(339, 421);
+            btnStart.Location = new Point(220, 30);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(100, 40);
-            btnStart.TabIndex = 0;
-            btnStart.Text = "Start";
+            btnStart.Size = new Size(150, 40);
+            btnStart.TabIndex = 1;
+            btnStart.Text = "Start Hand";
             btnStart.Click += btnStart_Click;
             // 
-            // btnHit
+            // btnReset
             // 
-            btnHit.Location = new Point(461, 300);
-            btnHit.Name = "btnHit";
-            btnHit.Size = new Size(100, 40);
-            btnHit.TabIndex = 1;
-            btnHit.Text = "Hit";
-            btnHit.Click += btnHit_Click;
+            btnReset.Location = new Point(390, 30);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(150, 40);
+            btnReset.TabIndex = 2;
+            btnReset.Text = "Reset";
+            btnReset.Click += btnReset_Click;
             // 
-            // btnStand
+            // lblScore
             // 
-            btnStand.Location = new Point(583, 240);
-            btnStand.Name = "btnStand";
-            btnStand.Size = new Size(100, 40);
-            btnStand.TabIndex = 2;
-            btnStand.Text = "Stand";
-            btnStand.Click += btnStand_Click;
+            lblScore.Location = new Point(220, 333);
+            lblScore.Name = "lblScore";
+            lblScore.Size = new Size(120, 43);
+            lblScore.TabIndex = 4;
+            lblScore.Text = "Score: 0";
+            // 
+            // lblCards
+            // 
+            lblCards.Location = new Point(37, 439);
+            lblCards.Name = "lblCards";
+            lblCards.Size = new Size(151, 39);
+            lblCards.TabIndex = 5;
+            lblCards.Text = "Kaarten: -";
             // 
             // lblPlayer
             // 
-            lblPlayer.Location = new Point(150, 150);
+            lblPlayer.BackColor = Color.LightBlue;
+            lblPlayer.Location = new Point(185, 176);
             lblPlayer.Name = "lblPlayer";
-            lblPlayer.Size = new Size(200, 30);
+            lblPlayer.Size = new Size(200, 60);
             lblPlayer.TabIndex = 3;
-            lblPlayer.Text = "Speler: 0";
+            lblPlayer.Text = "Speler";
+            lblPlayer.TextAlign = ContentAlignment.MiddleCenter;
+            lblPlayer.Click += lblPlayer_Click;
             // 
-            // lblAdvice
+            // lblMove
             // 
-            lblAdvice.Location = new Point(150, 200);
-            lblAdvice.Name = "lblAdvice";
-            lblAdvice.Size = new Size(200, 30);
-            lblAdvice.TabIndex = 4;
-            lblAdvice.Text = "-";
-            // 
-            // lblResult
-            // 
-            lblResult.Location = new Point(150, 250);
-            lblResult.Name = "lblResult";
-            lblResult.Size = new Size(200, 30);
-            lblResult.TabIndex = 5;
-            lblResult.Text = "-";
-            // 
-            // lblPoints
-            // 
-            lblPoints.Location = new Point(150, 300);
-            lblPoints.Name = "lblPoints";
-            lblPoints.Size = new Size(200, 30);
-            lblPoints.TabIndex = 6;
-            lblPoints.Text = "0";
-            // 
-            // button1
-            // 
-            button1.Location = new Point(85, 44);
-            button1.Name = "button1";
-            button1.Size = new Size(131, 40);
-            button1.TabIndex = 7;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(284, 44);
-            button2.Name = "button2";
-            button2.Size = new Size(131, 40);
-            button2.TabIndex = 8;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(487, 44);
-            button3.Name = "button3";
-            button3.Size = new Size(131, 40);
-            button3.TabIndex = 9;
-            button3.Text = "button3";
-            button3.UseVisualStyleBackColor = true;
+            lblMove.Location = new Point(440, 439);
+            lblMove.Name = "lblMove";
+            lblMove.Size = new Size(100, 39);
+            lblMove.TabIndex = 6;
+            lblMove.Text = "Speler wil: -";
             // 
             // Form1
             // 
-            ClientSize = new Size(1082, 582);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            ClientSize = new Size(600, 500);
+            Controls.Add(btnShuffle);
             Controls.Add(btnStart);
-            Controls.Add(btnHit);
-            Controls.Add(btnStand);
+            Controls.Add(btnReset);
             Controls.Add(lblPlayer);
-            Controls.Add(lblAdvice);
-            Controls.Add(lblResult);
-            Controls.Add(lblPoints);
+            Controls.Add(lblScore);
+            Controls.Add(lblCards);
+            Controls.Add(lblMove);
             Name = "Form1";
-            Text = "Blackjack Dealer Trainer";
+            Text = "Blackjack Trainer";
             ResumeLayout(false);
         }
-
-        private Button button1;
-        private Button button2;
-        private Button button3;
     }
 }

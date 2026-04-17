@@ -5,85 +5,105 @@ namespace Oop3BlackjackJaar2
 {
     public partial class Form1 : Form
     {
-        GameManager game;
-        DecisionChecker checker = new DecisionChecker();
-        int dealerPoints = 0;
+        Shoe shoe = new Shoe();
+        Hand hand = new Hand();
+        Hand dealerHand = new Hand();
+
+        bool playerDone = false;
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        // START
         private void btnStart_Click(object sender, EventArgs e)
         {
-            game = new GameManager();
+            hand = new Hand();
+            dealerHand = new Hand();
+            playerDone = false;
 
-            game.AddPlayer("Speler 1");
-            game.AddPlayer("Speler 2");
+            hand.AddCard(shoe.DrawCard());
+            hand.AddCard(shoe.DrawCard());
 
-            game.DealCards();
-            game.NextPlayer();
+            UpdateUI();
 
-            ShowPlayer();
+            lblMove.Text = "Klik op speler";
+            lblDealer.Text = "Dealer: -";
         }
 
-        void ShowPlayer()
+        // SHUFFLE
+        private void btnShuffle_Click(object sender, EventArgs e)
         {
-            var p = game.CurrentPlayer;
-
-            int score = p.Hand.GetScore();
-
-            lblPlayer.Text = "Speler: " + score;
-
-            string advies = checker.GetCorrectMove(p.Hand);
-            lblAdvice.Text = advies.ToUpper();
+            shoe = new Shoe();
+            MessageBox.Show("Deck geschud!");
         }
 
-        void Check(string keuze)
+        // RESET
+        private void btnReset_Click(object sender, EventArgs e)
         {
-            var p = game.CurrentPlayer;
+            hand = new Hand();
+            dealerHand = new Hand();
+            shoe = new Shoe();
 
-            bool correct = checker.Check(p.Hand, keuze);
+            lblScore.Text = "Score: 0";
+            lblCards.Text = "Kaarten: -";
+            lblMove.Text = "Speler wil: -";
+            lblDealer.Text = "Dealer: -";
+        }
 
-            if (correct)
+        // KLIK OP SPELER
+        private void lblPlayer_Click(object sender, EventArgs e)
+        {
+            if (playerDone) return;
+
+            int score = hand.GetScore();
+
+            // bust
+            if (score > 21)
             {
-                lblResult.Text = "Goed!";
-                dealerPoints++;
+                lblMove.Text = "Speler busted!";
+                playerDone = true;
+                return;
+            }
+
+            // speler AI
+            if (score <= 15)
+            {
+                lblMove.Text = "Speler wil: HIT";
+
+                hand.AddCard(shoe.DrawCard());
+                UpdateUI();
             }
             else
             {
-                lblResult.Text = "Fout!";
-                dealerPoints--;
+                lblMove.Text = "Speler wil: STAND";
+                playerDone = true;
+
+                StartDealer();
             }
+        }
 
-            lblPoints.Text = dealerPoints.ToString();
+        // DEALER START
+        void StartDealer()
+        {
+            dealerHand.AddCard(shoe.DrawCard());
+            dealerHand.AddCard(shoe.DrawCard());
 
-            if (keuze == "hit")
+            // 1 kaart zichtbaar
+            lblDealer.Text = "Dealer: " + dealerHand.Cards[0].Value + " ?";
+        }
+
+        // UI UPDATE
+        void UpdateUI()
+        {
+            lblScore.Text = "Score: " + hand.GetScore();
+
+            lblCards.Text = "Kaarten: ";
+            foreach (var c in hand.Cards)
             {
-                p.Hand.AddCard(game.Shoe.DrawCard());
+                lblCards.Text += c.Value + " ";
             }
-
-            game.NextPlayer();
-
-            if (game.CurrentPlayer != null)
-                ShowPlayer();
-            else
-                MessageBox.Show("Klaar!");
-        }
-
-        private void btnHit_Click(object sender, EventArgs e)
-        {
-            Check("hit");
-        }
-
-        private void btnStand_Click(object sender, EventArgs e)
-        {
-            Check("stand");
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
