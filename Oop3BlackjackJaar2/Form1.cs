@@ -5,9 +5,9 @@ namespace Oop3BlackjackJaar2
 {
     public partial class Form1 : Form
     {
-        Random rnd = new Random();
-        int playerScore = 0;
-        int dealerScore = 0;
+        GameManager game;
+        DecisionChecker checker = new DecisionChecker();
+        int dealerPoints = 0;
 
         public Form1()
         {
@@ -16,81 +16,72 @@ namespace Oop3BlackjackJaar2
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            playerScore = 0;
-            dealerScore = 0;
+            game = new GameManager();
 
-            lblPlayer.Text = "Speler: 0";
-            lblDealer.Text = "Dealer: 0";
+            game.AddPlayer("Speler 1");
+            game.AddPlayer("Speler 2");
 
-            playerScore += TrekKaart();
-            playerScore += TrekKaart();
+            game.DealCards();
+            game.NextPlayer();
 
-            lblPlayer.Text = "Speler: " + playerScore;
+            ShowPlayer();
+        }
+
+        void ShowPlayer()
+        {
+            var p = game.CurrentPlayer;
+
+            int score = p.Hand.GetScore();
+
+            lblPlayer.Text = "Speler: " + score;
+
+            string advies = checker.GetCorrectMove(p.Hand);
+            lblAdvice.Text = advies.ToUpper();
+        }
+
+        void Check(string keuze)
+        {
+            var p = game.CurrentPlayer;
+
+            bool correct = checker.Check(p.Hand, keuze);
+
+            if (correct)
+            {
+                lblResult.Text = "Goed!";
+                dealerPoints++;
+            }
+            else
+            {
+                lblResult.Text = "Fout!";
+                dealerPoints--;
+            }
+
+            lblPoints.Text = dealerPoints.ToString();
+
+            if (keuze == "hit")
+            {
+                p.Hand.AddCard(game.Shoe.DrawCard());
+            }
+
+            game.NextPlayer();
+
+            if (game.CurrentPlayer != null)
+                ShowPlayer();
+            else
+                MessageBox.Show("Klaar!");
         }
 
         private void btnHit_Click(object sender, EventArgs e)
         {
-            playerScore += TrekKaart();
-            lblPlayer.Text = "Speler: " + playerScore;
-
-            if (playerScore > 21)
-            {
-                MessageBox.Show("Je bent over 21. Je hebt verloren.");
-            }
+            Check("hit");
         }
 
         private void btnStand_Click(object sender, EventArgs e)
         {
-            while (dealerScore < 17)
-            {
-                dealerScore += TrekKaart();
-            }
-
-            lblDealer.Text = "Dealer: " + dealerScore;
-
-            if (dealerScore > 21)
-            {
-                MessageBox.Show("Dealer is over 21. Jij wint.");
-            }
-            else if (playerScore > dealerScore)
-            {
-                MessageBox.Show("Jij wint.");
-            }
-            else if (playerScore < dealerScore)
-            {
-                MessageBox.Show("Dealer wint.");
-            }
-            else
-            {
-                MessageBox.Show("Gelijkspel.");
-            }
+            Check("stand");
         }
 
-        private int TrekKaart()
-        {
-            string[] kaarten = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-            string kaart = kaarten[rnd.Next(kaarten.Length)];
-
-            int waarde;
-
-            if (kaart == "A")
-            {
-                waarde = 11;
-            }
-            else if (kaart == "J" || kaart == "Q" || kaart == "K")
-            {
-                waarde = 10;
-            }
-            else
-            {
-                waarde = int.Parse(kaart);
-            }
-
-            MessageBox.Show("Je trok: " + kaart);
-            return waarde;
-        }
-
-        private void lblDealer_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

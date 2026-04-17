@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Oop3BlackjackJaar2
+﻿public class Card
 {
-    internal class card
+    public string Suit;
+    public string Value;
+
+    public Card(string suit, string value)
     {
+        Suit = suit;
+        Value = value;
+    }
+
+    public int GetScore()
+    {
+        if (int.TryParse(Value, out int num)) return num;
+        if (Value == "J" || Value == "Q" || Value == "K") return 10;
+        return 11;
     }
 }
